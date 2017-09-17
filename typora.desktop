@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=@version
+Type=Application
+Name=Typora
+Icon=@icon
+Exec=/opt/typora/@exe %f
+Comment=Minimal markdown md editor
+Categories=Office;TextEditor
+Terminal=false
+MimeType=text/markdown
