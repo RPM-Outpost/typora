@@ -13,7 +13,7 @@ Open a terminal and run `./create-package.sh x64` to create a 64 bits package. R
 - Creates a ready-to-use RPM package
 - Sets Typora as the default markdown editor
 - Adds Typora to the applications' list with a nice HD icon
-- Tested on Fedora 26 (may work on other distributions)
+- Supports Fedora (26, 27), OpenSUSE (Leap) and Mageia (untested on Mageia)
 
 ## Screenshot
 ![beautiful screenshot](screenshot.png)

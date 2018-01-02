@@ -22,6 +22,16 @@ downloaded_dir="$work_dir/typora"
 exec_name='Typora'
 exec_file="$downloaded_dir/$exec_name"
 
+# Sets the dependencies according to the distribution
+if [[ $distrib == "redhat" ]]; then
+	pkg_deps='glibc, libstdc++'
+elif [[ $distrib == "suse" || $distrib == "mageia" ]]; then
+	pkg_deps='glibc, libstdc++6'
+else
+	disp "${red}Sorry, your distribution isn't supported (yet).$reset"
+	exit
+fi
+
 # Checks that the version is given as a parameter.
 if [[ $# -ne 1 || $1 != "x64" && $1 != "ia32" ]]; then
 	disp "${red}Wrong or missing parameters!$reset"
@@ -80,23 +90,23 @@ mime_icon256_file="/opt/typora/$icon_path/icon_256x256.png"
 mime_icon64_file="/opt/typora/$icon_path/icon_32x32@2x.png"
 #
 version_line=$(cat "$infos_file" | grep "version" -m 1)
-version_number=$(echo "$version_line" | cut -d'"' -f4)
+pkg_version=$(echo "$version_line" | cut -d'"' -f4)
 #
 echo " -> Infos path: $infos_path"
 echo " -> Icons path: $icon_path"
-echo " -> Version: $version_number"
+echo " -> Version: $pkg_version"
 
 
 echo 'Creating the .desktop file...'
 cp "$mime_spec_file" "$downloaded_dir"
 cp "$desktop_model" "$desktop_file"
-sed -e "s}@version}$version_number}; s}@icon}$icon_file}; s}@exe}$exec_name}" "$desktop_model" > "$desktop_file"
+sed -e "s}@version}$pkg_version}; s}@icon}$icon_file}; s}@exe}$exec_name}" "$desktop_model" > "$desktop_file"
 
 arch=$rpm_arch
 disp "${yellow}Creating the RPM package for $rpm_arch (this may take a while)..."
 rpmbuild -bb --quiet --nocheck "$spec_file" --define "_topdir $work_dir" --define "_rpmdir $rpm_dir"\
 	--define "arch $arch" --define "downloaded_dir $downloaded_dir" --define "desktop_file $desktop_file"\
-	--define "version_number $version_number" --define "exec_name $exec_name"\
+	--define "pkg_version $pkg_version" --define "pkg_deps $pkg_deps" --define "exec_name $exec_name"\
 	--define "mime_icon $mime_icon64_file" --define "mime_icon_big $mime_icon256_file"
 
 disp "${bgreen}Done!${reset_font}"

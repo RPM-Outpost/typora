@@ -3,7 +3,7 @@
 %define _build_id_links none
 
 Name:		typora
-Version:	%{version_number}
+Version:	%{pkg_version}
 Release:	0%{?dist}
 Summary:	Minimal markdown editor.
 
@@ -11,7 +11,7 @@ Group:		Applications/Office
 License:	Proprietary
 URL:		https://typora.io
 BuildArch:	%{arch}
-Requires:   glibc, libstdc++ >= 6
+Requires:   %{pkg_deps}
 
 %description
 Minimal markdown editor
