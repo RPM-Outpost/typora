@@ -1,4 +1,26 @@
 #!/bin/bash
+# Author: TheElectronWill
+# Various functions used by the scripts of https://github.com/RPM-Outpost
+# This script requires terminal-colors.sh
+
+# Initializes $installer and $distrib
+if hash dnf 2>/dev/null; then
+	# Fedora, CentOS
+	installer="dnf install --allowerasing"
+	distrib="redhat"
+elif hash zypper 2>/dev/null; then
+	# OpenSUSE
+	installer="zypper install"
+	distrib="suse"
+elif hash urpmi 2>/dev/null; then
+	# Mageia
+	installer="urpmi"
+	distrib="mageia"
+else
+	# Unknown
+	installer="exit"
+	distrib="unknown"
+fi
 
 # ask_yesno question
 ## Asks a yes/no question and stores the result in the 'answer' variable
@@ -35,7 +57,7 @@ manage_dir() {
 	mkdir -p "$1"
 }
 
-# ask_installpkg
+# ask_installpkg [all]
 ## Asks the user if they want to install the newly created package.
 ask_installpkg() {
 	if [[ $1 == "all" || $2 == "all" ]]; then
@@ -47,23 +69,33 @@ ask_installpkg() {
 	case "$answer" in
 		y|Y)
 			cd "$rpm_dir/$arch"
-			if [[ $1 == "all" || $2 == "all" ]]; then
+			if [[ $1 == "all" ]]; then
 				rpm_filename=$(find -type f -name '*.rpm' -printf '%P\n')
 			else
 				rpm_filename=$(find -maxdepth 1 -type f -name '*.rpm' -printf '%P\n' -quit)
 			fi
-			if [[ $1 == "allowerasing" || $2 == "allowerasing" ]]; then
-				sudo dnf install --allowerasing $rpm_filename
-			else
-				sudo dnf install "$rpm_filename"
-			fi
+			sudo_install $rpm_filename
 			;;
 		*)
 			echo "Packag$pl not installed."
 	esac
 }
 
-# extract archive_file destination [options]
+# sudo_install pkg [options]
+sudo_install() {
+	sudo $installer "$@"
+}
+
+# sudo_install_prompt prompt pkg [options]
+sudo_install_prompt() {
+	if [[ $# -eq 2 ]]; then
+		sudo -p "$1" $installer "$2"
+	else
+		sudo -p "$1" $installer "$2" $3
+	fi
+}
+
+# extract archive_file destination [option1 [option2]]
 extract() {
 	echo "Extracting \"$1\"..."
 	if [[ "$1" == *.tar.gz ]]; then

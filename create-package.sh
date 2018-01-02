@@ -2,8 +2,8 @@
 # Author: TheElectronWill
 
 source terminal-colors.sh # Adds color variables
-source basic-checks.sh # Checks that rpmbuild is available and that the script isn't started as root
 source common-functions.sh # Adds utilities functions
+source basic-checks.sh # Checks that rpmbuild is available and that the script isn't started as root
 
 rpm_dir="$PWD/RPMs"
 work_dir="$PWD/work"
