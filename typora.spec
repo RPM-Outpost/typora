@@ -1,5 +1,6 @@
 %define install_dir /opt/typora
 %define apps_dir /usr/share/applications
+%define _build_id_links none
 
 Name:		typora
 Version:	%{version_number}
