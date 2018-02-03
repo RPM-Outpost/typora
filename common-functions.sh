@@ -5,8 +5,12 @@
 
 # Initializes $installer and $distrib
 if hash dnf 2>/dev/null; then
-	# Fedora, CentOS
+	# Fedora, CentOS with dnf installed
 	installer="dnf install --allowerasing"
+	distrib="redhat"
+elif hash yum 2>/dev/null; then
+	# CentOS
+	installer="yum install"
 	distrib="redhat"
 elif hash zypper 2>/dev/null; then
 	# OpenSUSE
@@ -21,6 +25,9 @@ else
 	installer="exit"
 	distrib="unknown"
 fi
+
+# Initializes $wget_progress: detects if the option --show-progress is available
+wget --help | grep -q '\--show-progress' && wget_progress="-q --show-progress" || wget_progress=""
 
 # ask_yesno question
 ## Asks a yes/no question and stores the result in the 'answer' variable
