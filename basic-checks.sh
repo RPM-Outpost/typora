@@ -25,9 +25,10 @@ if ! type 'rpmbuild' > /dev/null; then
 	style $bold
 	read -n 1 -p '> Install the rpmdevtools package now? [y/N]: ' answer
 	echo
+	if [[ $distrib == "suse" ]]; then rpmbuild_pck="rpm-build"; else rpmbuild_pck="rmpdevtools"; fi
 	case "$answer" in
 		y|Y)
-			sudo_install_prompt 'Enter your password to install rpmdevtools: ' rpmdevtools
+			sudo_install_prompt 'Enter your password to install rpmdevtools: ' $rpmbuild_pck
 			;;
 		*) 
 			echo "${reset}The package won't be installed. Exiting now."
