@@ -32,19 +32,11 @@ else
 	exit
 fi
 
-# Checks that the version is given as a parameter.
-if [[ $# -ne 1 || $1 != "x64" && $1 != "ia32" ]]; then
-	disp "${red}Wrong or missing parameters!$reset"
-	echo 'Usage: create-package.sh x64/ia32'
-	exit
-fi
-arch="$1"
+# Static Arch-Definition
+arch="x64"
+rpm_arch="x86_64"
+
 download_url="https://typora.io/linux/Typora-linux-$arch.tar.gz"
-if [[ $arch == "x64" ]]; then
-	rpm_arch="x86_64"
-else
-	rpm_arch="i686"
-fi
 
 # Downloads the typora zip archive.
 download_typora() {
