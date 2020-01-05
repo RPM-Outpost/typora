@@ -70,7 +70,7 @@ echo
 if [ ! -d "$downloaded_dir" ]; then
 	mkdir "$downloaded_dir"
 fi
-extract "$archive_name" "$downloaded_dir" "--strip 1" # --strip 1 gets rid of the top archive's directory
+extract "$archive_name" "$downloaded_dir" "--strip 2" # --strip 1 gets rid of the top archive's directory
 
 echo 'Analysing the files...'
 infos_path='resources/app/package.json'
