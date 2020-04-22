@@ -11,7 +11,7 @@ Group:		Applications/Office
 License:	Proprietary
 URL:		https://typora.io
 BuildArch:	%{arch}
-Requires:   %{pkg_deps}
+Requires:       %{pkg_deps}
 
 %description
 Minimal markdown editor
