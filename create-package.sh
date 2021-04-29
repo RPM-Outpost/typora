@@ -73,10 +73,10 @@ fi
 extract "$archive_name" "$downloaded_dir" "--strip 2" # --strip 2 gets rid of the top archive's directory
 
 echo 'Analysing the files...'
-infos_path='resources/app/package.json'
+infos_path='resources/package.json'
 infos_file="$downloaded_dir/$infos_path"
 #
-icon_path="resources/app/asserts/icon"
+icon_path="resources/assets/icon"
 icon_file="/opt/typora/$icon_path/icon_512x512.png"
 mime_icon256_file="/opt/typora/$icon_path/icon_256x256.png"
 mime_icon64_file="/opt/typora/$icon_path/icon_32x32@2x.png"
