@@ -36,7 +36,7 @@ fi
 arch="x64"
 rpm_arch="x86_64"
 
-download_url="https://typora.io/linux/Typora-linux-$arch.tar.gz"
+download_url="https://download.typora.io/linux/Typora-linux-$arch.tar.gz"
 
 # Downloads the typora zip archive.
 download_typora() {
